@@ -1,12 +1,11 @@
 ﻿using EventFlow.AspNetCore.Extensions;
+using EventFlow.DependencyInjection.Extensions;
+using EventFlow.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EventFlow.DependencyInjection.Extensions;
-using EventFlow.Extensions;
-
 
 namespace WebApp
 {
@@ -29,7 +28,7 @@ namespace WebApp
             services.AddEventFlow(flowOptions =>
             {
                 flowOptions.AddDefaults(typeof(Startup).Assembly);
-                flowOptions.AddAspNetCore();
+                flowOptions.AddAspNetCore(x => { });
             });
         }
 
