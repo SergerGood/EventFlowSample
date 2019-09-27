@@ -1,13 +1,14 @@
 ﻿using EventFlow.Aggregates;
 using EventFlow.ReadStores;
 
-namespace GettingStartedTest
+namespace GettingStartedTest.Model
 {
     public class ReadModel : IReadModel, IAmReadModelFor<Aggregate, AggregateId, Event>
     {
         public int MagicNumber { get; private set; }
 
-        public void Apply(IReadModelContext context, IDomainEvent<Aggregate, AggregateId, Event> domainEvent)
+        public void Apply(IReadModelContext context,
+            IDomainEvent<Aggregate, AggregateId, Event> domainEvent)
         {
             MagicNumber = domainEvent.AggregateEvent.MagicNumber;
         }

@@ -1,7 +1,7 @@
 ﻿using EventFlow.Aggregates;
 using EventFlow.EventStores;
 
-namespace GettingStartedTest
+namespace GettingStartedTest.Model
 {
     [EventVersion("example", 1)]
     public class Event : AggregateEvent<Aggregate, AggregateId>

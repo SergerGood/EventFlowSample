@@ -1,6 +1,6 @@
 ﻿using EventFlow.Core;
 
-namespace GettingStartedTest
+namespace GettingStartedTest.Model
 {
     public class AggregateId : Identity<AggregateId>
     {

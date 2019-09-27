@@ -1,30 +1,31 @@
 ﻿using EventFlow.Aggregates;
 using EventFlow.Aggregates.ExecutionResults;
 
-namespace GettingStartedTest
+namespace GettingStartedTest.Model
 {
-    public class Aggregate : AggregateRoot<Aggregate, AggregateId>, IEmit<Event>
+    public class Aggregate : AggregateRoot<Aggregate, AggregateId> //, IEmit<Event>
     {
         private int? magicNumber;
 
         public Aggregate(AggregateId id)
             : base(id)
         {
+            //Register<Event>(Apply);
         }
 
-        public void Apply(Event aggregateEvent)
+        private void Apply(Event aggregateEvent)
         {
             magicNumber = aggregateEvent.MagicNumber;
         }
 
-        public IExecutionResult SetMagicNumer(int magicNumber)
+        public IExecutionResult SetMagicNumber(int value)
         {
-            if (this.magicNumber.HasValue)
+            if (magicNumber.HasValue)
             {
                 return ExecutionResult.Failed("Magic number already set");
             }
 
-            Emit(new Event(magicNumber));
+            Emit(new Event(value));
 
             return ExecutionResult.Success();
         }

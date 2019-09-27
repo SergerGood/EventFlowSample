@@ -1,11 +1,12 @@
 ﻿using EventFlow.Aggregates.ExecutionResults;
 using EventFlow.Commands;
 
-namespace GettingStartedTest
+namespace GettingStartedTest.Model
 {
-    public class AggregateCommand : Command<Aggregate, AggregateId, IExecutionResult>
+    public class SetMagicNumberCommand 
+        : Command<Aggregate, AggregateId, IExecutionResult>
     {
-        public AggregateCommand(AggregateId aggregateId, int magicNumber)
+        public SetMagicNumberCommand(AggregateId aggregateId, int magicNumber)
             : base(aggregateId)
         {
             MagicNumber = magicNumber;
