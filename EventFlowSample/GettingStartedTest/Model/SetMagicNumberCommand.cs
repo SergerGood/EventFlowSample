@@ -3,7 +3,7 @@ using EventFlow.Commands;
 
 namespace GettingStartedTest.Model
 {
-    public class SetMagicNumberCommand 
+    public class SetMagicNumberCommand
         : Command<Aggregate, AggregateId, IExecutionResult>
     {
         public SetMagicNumberCommand(AggregateId aggregateId, int magicNumber)
