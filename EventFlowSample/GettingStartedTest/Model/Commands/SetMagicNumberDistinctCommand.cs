@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using EventFlow.Aggregates.ExecutionResults;
 using EventFlow.Commands;
 
-namespace GettingStartedTest.Model
+namespace GettingStartedTest.Model.Commands
 {
     public class SetMagicNumberDistinctCommand
         : DistinctCommand<Aggregate, AggregateId, IExecutionResult>

@@ -1,11 +1,16 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EventFlow;
 using EventFlow.Exceptions;
 using EventFlow.Extensions;
 using EventFlow.Queries;
+using EventFlow.RabbitMQ;
+using EventFlow.RabbitMQ.Extensions;
 using FluentAssertions;
 using GettingStartedTest.Model;
+using GettingStartedTest.Model.Commands;
+using GettingStartedTest.Model.Subscribers;
 using NUnit.Framework;
 
 namespace GettingStartedTest
@@ -57,7 +62,6 @@ namespace GettingStartedTest
                     .AddEvents(typeof(Event))
                     .AddCommands(typeof(SetMagicNumberDistinctCommand))
                     .AddCommandHandlers(typeof(SetMagicNumberDistinctCommandHandler))
-                    .UseInMemoryReadStoreFor<ReadModel>()
                     .CreateResolver())
                 {
                     var exampleId = AggregateId.NewComb();
@@ -72,6 +76,36 @@ namespace GettingStartedTest
 
                     Assert.ThrowsAsync<DuplicateOperationException>(async () =>
                         await commandBus.PublishAsync(command2, tokenSource.Token));
+                }
+            }
+        }
+
+        [Test]
+        public async Task ShouldHandlePublishToRabbitMq()
+        {
+            using (var tokenSource = new CancellationTokenSource())
+            {
+                using (var resolver = EventFlowOptions.New
+                    .Configure(x =>
+                    {
+                        x.IsAsynchronousSubscribersEnabled = true;
+                        x.ThrowSubscriberExceptions = true;
+                    })
+                    .PublishToRabbitMq(RabbitMqConfiguration.With(new Uri("amqp://localhost:5672")))
+                    .AddSynchronousSubscriber<Aggregate, AggregateId, Event, SynchronousSubscriber>()
+                    .AddAsynchronousSubscriber<Aggregate, AggregateId, Event, AsynchronousSubscriber>()
+                    .AddEvents(typeof(Event))
+                    .AddCommands(typeof(SetMagicNumberCommand))
+                    .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
+                    .CreateResolver())
+                {
+                    var exampleId = AggregateId.NewComb();
+                    const int magicNumber = 42;
+
+                    var commandBus = resolver.Resolve<ICommandBus>();
+
+                    var command = new SetMagicNumberCommand(exampleId, magicNumber);
+                    await commandBus.PublishAsync(command, tokenSource.Token);
                 }
             }
         }

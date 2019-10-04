@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using EventFlow.Aggregates.ExecutionResults;
 using EventFlow.Commands;
 
-namespace GettingStartedTest.Model
+namespace GettingStartedTest.Model.Commands
 {
     public class SetMagicNumberCommandHandler
         : CommandHandler<Aggregate, AggregateId, IExecutionResult, SetMagicNumberCommand>
