@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
 using EventFlow;
+using EventFlow.Autofac.Extensions;
 using EventFlow.Exceptions;
 using EventFlow.Extensions;
 using EventFlow.MetadataProviders;
@@ -13,6 +15,7 @@ using EventFlow.RabbitMQ.Extensions;
 using FluentAssertions;
 using GettingStartedTest.Model;
 using GettingStartedTest.Model.Commands;
+using GettingStartedTest.Model.Queries;
 using GettingStartedTest.Model.Subscribers;
 using NUnit.Framework;
 
@@ -49,7 +52,7 @@ namespace GettingStartedTest
             var queryProcessor = resolver.Resolve<IQueryProcessor>();
 
             var query = new ReadModelByIdQuery<ReadModel>(exampleId);
-            var readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+            ReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
 
             readModel.MagicNumber.Should().Be(magicNumber);
         }
@@ -82,7 +85,6 @@ namespace GettingStartedTest
         [Test]
         public async Task ShouldHandlePublishToRabbitMq()
         {
-            var stopwatch = new Stopwatch();
             using var tokenSource = new CancellationTokenSource();
 
             using var resolver = EventFlowOptions.New
@@ -104,6 +106,8 @@ namespace GettingStartedTest
 
             var commandBus = resolver.Resolve<ICommandBus>();
 
+            var stopwatch = Stopwatch.StartNew();
+
             var tasks = Enumerable.Range(0, 100)
                 .Select(i =>
                 {
@@ -111,11 +115,41 @@ namespace GettingStartedTest
                     return commandBus.PublishAsync(command, tokenSource.Token);
                 });
 
-            stopwatch.Start();
             await Task.WhenAll(tasks);
-            stopwatch.Stop();
 
             Console.WriteLine($"{stopwatch.ElapsedMilliseconds}");
+        }
+
+        [Test]
+        public async Task ShouldHandleQuery()
+        {
+            var containerBuilder = new ContainerBuilder();
+            using var tokenSource = new CancellationTokenSource();
+
+            using var resolver = EventFlowOptions.New
+                .UseAutofacContainerBuilder(containerBuilder)
+                .AddEvents(typeof(Event))
+                .AddCommands(typeof(SetMagicNumberCommand))
+                .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
+                .UseInMemoryReadStoreFor<ReadModel>()
+                .AddQueryHandler<GetAggregateByMagicNumberQueryHandler, GetAggregateByMagicNumberQuery, ReadModel>()
+                .CreateResolver();
+
+            var exampleId = AggregateId.NewComb();
+            const int magicNumber = 42;
+
+            var commandBus = resolver.Resolve<ICommandBus>();
+
+            var command = new SetMagicNumberCommand(exampleId, magicNumber);
+            await commandBus.PublishAsync(command, tokenSource.Token);
+
+
+            var queryProcessor = resolver.Resolve<IQueryProcessor>();
+
+            var query = new GetAggregateByMagicNumberQuery(magicNumber);
+            ReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+
+            readModel.MagicNumber.Should().Be(magicNumber);
         }
     }
 }
