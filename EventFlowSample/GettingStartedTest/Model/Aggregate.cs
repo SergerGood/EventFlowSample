@@ -20,10 +20,10 @@ namespace GettingStartedTest.Model
 
         public IExecutionResult SetMagicNumber(int value)
         {
-            if (magicNumber.HasValue)
-            {
-                return ExecutionResult.Failed("Magic number already set");
-            }
+            //if (magicNumber.HasValue)
+            //{
+            //    return ExecutionResult.Failed("Magic number already set");
+            //}
 
             Emit(new Event(value));
 
