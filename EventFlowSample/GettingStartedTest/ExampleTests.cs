@@ -15,6 +15,7 @@ using EventFlow.RabbitMQ.Extensions;
 using FluentAssertions;
 using GettingStartedTest.Model;
 using GettingStartedTest.Model.Commands;
+using GettingStartedTest.Model.Events;
 using GettingStartedTest.Model.Queries;
 using GettingStartedTest.Model.Subscribers;
 using NUnit.Framework;
@@ -147,6 +148,36 @@ namespace GettingStartedTest
             var queryProcessor = resolver.Resolve<IQueryProcessor>();
 
             var query = new GetAggregateByMagicNumberQuery(magicNumber);
+            ReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+
+            readModel.MagicNumber.Should().Be(magicNumber);
+        }
+
+        [Test]
+        public async Task ShouldEventUpgraded()
+        {
+            using var tokenSource = new CancellationTokenSource();
+
+            using var resolver = EventFlowOptions.New
+                .AddEvents(typeof(Event))
+                .AddCommands(typeof(SetMagicNumberCommand))
+                .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
+                .UseInMemoryReadStoreFor<ReadModel>()
+                .AddEventUpgrader<Aggregate, AggregateId, UpgradeEventToV2>()
+                .CreateResolver();
+
+            var exampleId = AggregateId.NewComb();
+            const int magicNumber = 42;
+
+            var commandBus = resolver.Resolve<ICommandBus>();
+
+            var command = new SetMagicNumberCommand(exampleId, magicNumber);
+            await commandBus.PublishAsync(command, tokenSource.Token);
+
+            
+            var queryProcessor = resolver.Resolve<IQueryProcessor>();
+
+            var query = new ReadModelByIdQuery<ReadModel>(exampleId);
             ReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
 
             readModel.MagicNumber.Should().Be(magicNumber);

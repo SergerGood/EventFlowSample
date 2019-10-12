@@ -1,5 +1,6 @@
 ﻿using EventFlow.Aggregates;
 using EventFlow.ReadStores;
+using GettingStartedTest.Model.Events;
 
 namespace GettingStartedTest.Model
 {

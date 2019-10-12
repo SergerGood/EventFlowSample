@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EventFlow.Aggregates;
 using EventFlow.Subscribers;
+using GettingStartedTest.Model.Events;
 
 namespace GettingStartedTest.Model.Subscribers
 {

@@ -1,5 +1,6 @@
 ﻿using EventFlow.Aggregates;
 using EventFlow.Aggregates.ExecutionResults;
+using GettingStartedTest.Model.Events;
 
 namespace GettingStartedTest.Model
 {
