@@ -14,6 +14,7 @@ using EventFlow.PostgreSql;
 using EventFlow.PostgreSql.Connections;
 using EventFlow.PostgreSql.EventStores;
 using EventFlow.PostgreSql.Extensions;
+using EventFlow.PostgreSql.SnapshotStores;
 using EventFlow.Queries;
 using EventFlow.RabbitMQ;
 using EventFlow.RabbitMQ.Extensions;
@@ -250,7 +251,7 @@ namespace GettingStartedTest
                 .CreateResolver();
 
             var databaseMigrator = resolver.Resolve<IPostgreSqlDatabaseMigrator>();
-            EventFlowEventStoresPostgreSql.MigrateDatabase(databaseMigrator);
+            EventFlowSnapshotStoresPostgreSql.MigrateDatabase(databaseMigrator);
 
             var exampleId = AggregateId.NewComb();
             const int magicNumber = 42;
