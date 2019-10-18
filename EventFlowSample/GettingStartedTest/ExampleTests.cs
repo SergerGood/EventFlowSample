@@ -179,7 +179,7 @@ namespace GettingStartedTest
             var command = new SetMagicNumberCommand(exampleId, magicNumber);
             await commandBus.PublishAsync(command, tokenSource.Token);
 
-            
+
             var queryProcessor = resolver.Resolve<IQueryProcessor>();
 
             var query = new ReadModelByIdQuery<AggregateReadModel>(exampleId);
@@ -204,12 +204,49 @@ namespace GettingStartedTest
                 .AddEvents(typeof(Event))
                 .AddCommands(typeof(SetMagicNumberCommand))
                 .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
-                .UsePostgreSqlEventStore()
                 .ConfigurePostgreSql(PostgreSqlConfiguration.New
                     .SetConnectionString(connectionString)
                     .SetTransientRetryDelay(RetryDelay.Between(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(2)))
                     .SetTransientRetryCount(5))
+                .UsePostgreSqlEventStore()
                 .UsePostgreSqlReadModel<AggregateReadModel>()
+                .CreateResolver();
+
+            var databaseMigrator = resolver.Resolve<IPostgreSqlDatabaseMigrator>();
+            EventFlowEventStoresPostgreSql.MigrateDatabase(databaseMigrator);
+
+            var exampleId = AggregateId.NewComb();
+            const int magicNumber = 42;
+
+            var commandBus = resolver.Resolve<ICommandBus>();
+
+            var command = new SetMagicNumberCommand(exampleId, magicNumber);
+            await commandBus.PublishAsync(command, tokenSource.Token);
+
+            var queryProcessor = resolver.Resolve<IQueryProcessor>();
+
+            var query = new ReadModelByIdQuery<AggregateReadModel>(exampleId);
+            var readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+
+            readModel.MagicNumber.Should().Be(magicNumber);
+        }
+
+        [Test]
+        public async Task ShouldUseSnapshots()
+        {
+            var connectionString = @"Server=localhost;Port=5432;Database=event_flow_sample;User id=postgres;password=postgres;";
+            using var tokenSource = new CancellationTokenSource();
+
+            using var resolver = EventFlowOptions.New
+                .AddEvents(typeof(Event))
+                .AddCommands(typeof(SetMagicNumberCommand))
+                .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
+                .ConfigurePostgreSql(PostgreSqlConfiguration.New
+                    .SetConnectionString(connectionString))
+                .UsePostgreSqlEventStore()
+                .UsePostgreSqlReadModel<AggregateReadModel>()
+                .AddSnapshots(typeof(AggregateSnapshot))
+                .UsePostgreSqlSnapshotStore()
                 .CreateResolver();
 
             var databaseMigrator = resolver.Resolve<IPostgreSqlDatabaseMigrator>();
