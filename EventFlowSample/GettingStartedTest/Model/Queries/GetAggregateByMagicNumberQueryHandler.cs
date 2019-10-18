@@ -4,12 +4,12 @@ using EventFlow.Queries;
 
 namespace GettingStartedTest.Model.Queries
 {
-    public class GetAggregateByMagicNumberQueryHandler : IQueryHandler<GetAggregateByMagicNumberQuery, ReadModel>
+    public class GetAggregateByMagicNumberQueryHandler : IQueryHandler<GetAggregateByMagicNumberQuery, AggregateReadModel>
     {
-        public async Task<ReadModel> ExecuteQueryAsync(GetAggregateByMagicNumberQuery query,
+        public async Task<AggregateReadModel> ExecuteQueryAsync(GetAggregateByMagicNumberQuery query,
             CancellationToken cancellationToken)
         {
-            return await Task.FromResult(new ReadModel());
+            return await Task.FromResult(new AggregateReadModel());
         }
     }
 }

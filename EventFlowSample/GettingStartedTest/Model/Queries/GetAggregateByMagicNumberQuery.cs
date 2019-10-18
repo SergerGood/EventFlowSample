@@ -2,7 +2,7 @@
 
 namespace GettingStartedTest.Model.Queries
 {
-    public class GetAggregateByMagicNumberQuery : IQuery<ReadModel>
+    public class GetAggregateByMagicNumberQuery : IQuery<AggregateReadModel>
     {
         public GetAggregateByMagicNumberQuery(int magicNumber)
         {

@@ -1,10 +1,10 @@
-﻿using EventFlow.Aggregates;
+﻿using System.Collections.Generic;
+using EventFlow.Aggregates;
 using EventFlow.EventStores;
-using System.Collections.Generic;
 
 namespace GettingStartedTest.Model.Events
 {
-    class UpgradeEventToV2 : IEventUpgrader<Aggregate, AggregateId>
+    internal class UpgradeEventToV2 : IEventUpgrader<Aggregate, AggregateId>
     {
         private readonly IDomainEventFactory domainEventFactory;
 
@@ -18,9 +18,8 @@ namespace GettingStartedTest.Model.Events
             var eventV1 = domainEvent as IDomainEvent<Aggregate, AggregateId, Event>;
 
             yield return eventV1 == null
-              ? domainEvent
-              : domainEventFactory.Upgrade<Aggregate, AggregateId>(
-                domainEvent, new EventV2(eventV1.AggregateEvent.MagicNumber));
+                ? domainEvent
+                : domainEventFactory.Upgrade<Aggregate, AggregateId>(domainEvent, new EventV2(eventV1.AggregateEvent.MagicNumber));
         }
     }
 }

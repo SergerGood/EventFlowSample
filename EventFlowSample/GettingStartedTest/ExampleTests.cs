@@ -9,6 +9,10 @@ using EventFlow.Autofac.Extensions;
 using EventFlow.Exceptions;
 using EventFlow.Extensions;
 using EventFlow.MetadataProviders;
+using EventFlow.PostgreSql;
+using EventFlow.PostgreSql.Connections;
+using EventFlow.PostgreSql.EventStores;
+using EventFlow.PostgreSql.Extensions;
 using EventFlow.Queries;
 using EventFlow.RabbitMQ;
 using EventFlow.RabbitMQ.Extensions;
@@ -33,7 +37,7 @@ namespace GettingStartedTest
                 .AddEvents(typeof(Event))
                 .AddCommands(typeof(SetMagicNumberCommand))
                 .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
-                .UseInMemoryReadStoreFor<ReadModel>()
+                .UseInMemoryReadStoreFor<AggregateReadModel>()
                 .CreateResolver();
 
             var exampleId = AggregateId.NewComb();
@@ -52,8 +56,8 @@ namespace GettingStartedTest
 
             var queryProcessor = resolver.Resolve<IQueryProcessor>();
 
-            var query = new ReadModelByIdQuery<ReadModel>(exampleId);
-            ReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+            var query = new ReadModelByIdQuery<AggregateReadModel>(exampleId);
+            AggregateReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
 
             readModel.MagicNumber.Should().Be(magicNumber);
         }
@@ -132,8 +136,8 @@ namespace GettingStartedTest
                 .AddEvents(typeof(Event))
                 .AddCommands(typeof(SetMagicNumberCommand))
                 .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
-                .UseInMemoryReadStoreFor<ReadModel>()
-                .AddQueryHandler<GetAggregateByMagicNumberQueryHandler, GetAggregateByMagicNumberQuery, ReadModel>()
+                .UseInMemoryReadStoreFor<AggregateReadModel>()
+                .AddQueryHandler<GetAggregateByMagicNumberQueryHandler, GetAggregateByMagicNumberQuery, AggregateReadModel>()
                 .CreateResolver();
 
             var exampleId = AggregateId.NewComb();
@@ -148,7 +152,7 @@ namespace GettingStartedTest
             var queryProcessor = resolver.Resolve<IQueryProcessor>();
 
             var query = new GetAggregateByMagicNumberQuery(magicNumber);
-            ReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+            AggregateReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
 
             readModel.MagicNumber.Should().Be(magicNumber);
         }
@@ -162,7 +166,7 @@ namespace GettingStartedTest
                 .AddEvents(typeof(Event))
                 .AddCommands(typeof(SetMagicNumberCommand))
                 .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
-                .UseInMemoryReadStoreFor<ReadModel>()
+                .UseInMemoryReadStoreFor<AggregateReadModel>()
                 .AddEventUpgrader<Aggregate, AggregateId, UpgradeEventToV2>()
                 .CreateResolver();
 
@@ -177,8 +181,43 @@ namespace GettingStartedTest
             
             var queryProcessor = resolver.Resolve<IQueryProcessor>();
 
-            var query = new ReadModelByIdQuery<ReadModel>(exampleId);
-            ReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+            var query = new ReadModelByIdQuery<AggregateReadModel>(exampleId);
+            AggregateReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+
+            readModel.MagicNumber.Should().Be(magicNumber);
+        }
+
+        [Test]
+        public async Task ShouldUsePostgres()
+        {
+            var connectionString = @"Server=localhost;Port=5432;Database=event_flow_sample;User id=postgres;password=postgres;";
+            using var tokenSource = new CancellationTokenSource();
+
+            using var resolver = EventFlowOptions.New
+                .AddEvents(typeof(Event))
+                .AddCommands(typeof(SetMagicNumberCommand))
+                .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
+                .UsePostgreSqlEventStore()
+                .ConfigurePostgreSql(PostgreSqlConfiguration.New
+                    .SetConnectionString(connectionString))
+                .UsePostgreSqlReadModel<AggregateReadModel>()
+                .CreateResolver();
+
+            var databaseMigrator = resolver.Resolve<IPostgreSqlDatabaseMigrator>();
+            EventFlowEventStoresPostgreSql.MigrateDatabase(databaseMigrator);
+
+            var exampleId = AggregateId.NewComb();
+            const int magicNumber = 42;
+
+            var commandBus = resolver.Resolve<ICommandBus>();
+
+            var command = new SetMagicNumberCommand(exampleId, magicNumber);
+            await commandBus.PublishAsync(command, tokenSource.Token);
+
+            var queryProcessor = resolver.Resolve<IQueryProcessor>();
+
+            var query = new ReadModelByIdQuery<AggregateReadModel>(exampleId);
+            var readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
 
             readModel.MagicNumber.Should().Be(magicNumber);
         }
