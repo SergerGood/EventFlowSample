@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using EventFlow;
 using EventFlow.Autofac.Extensions;
+using EventFlow.Core;
 using EventFlow.Exceptions;
 using EventFlow.Extensions;
 using EventFlow.MetadataProviders;
@@ -194,12 +195,20 @@ namespace GettingStartedTest
             using var tokenSource = new CancellationTokenSource();
 
             using var resolver = EventFlowOptions.New
+                .Configure(configuration =>
+                {
+                    configuration.DelayBeforeRetryOnOptimisticConcurrencyExceptions = TimeSpan.FromSeconds(5);
+                    configuration.NumberOfRetriesOnOptimisticConcurrencyExceptions = 5;
+                    configuration.PopulateReadModelEventPageSize = 200;
+                })
                 .AddEvents(typeof(Event))
                 .AddCommands(typeof(SetMagicNumberCommand))
                 .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
                 .UsePostgreSqlEventStore()
                 .ConfigurePostgreSql(PostgreSqlConfiguration.New
-                    .SetConnectionString(connectionString))
+                    .SetConnectionString(connectionString)
+                    .SetTransientRetryDelay(RetryDelay.Between(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(2)))
+                    .SetTransientRetryCount(5))
                 .UsePostgreSqlReadModel<AggregateReadModel>()
                 .CreateResolver();
 
