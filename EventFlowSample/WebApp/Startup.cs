@@ -1,5 +1,12 @@
-﻿using EventFlow.AspNetCore.Extensions;
-using EventFlow.DependencyInjection.Extensions;
+﻿using System;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using DomainModel;
+using DomainModel.Commands;
+using DomainModel.Events;
+using EventFlow;
+using EventFlow.AspNetCore.Extensions;
+using EventFlow.Autofac.Extensions;
 using EventFlow.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,15 +25,25 @@ namespace WebApp
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddEventFlow(flowOptions =>
-            {
-                flowOptions.AddDefaults(typeof(Startup).Assembly);
-                flowOptions.AddAspNetCore(x => { });
-            });
+            services.AddOptions();
+
+            var containerBuilder = new ContainerBuilder();
+
+            EventFlowOptions.New
+                .AddAspNetCore(options => { })
+                .UseAutofacContainerBuilder(containerBuilder)
+                .AddEvents(typeof(Event))
+                .AddCommands(typeof(SetMagicNumberCommand))
+                .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
+                .UseInMemoryReadStoreFor<AggregateReadModel>();
+
+            containerBuilder.Populate(services);
+
+            return new AutofacServiceProvider(containerBuilder.Build());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
