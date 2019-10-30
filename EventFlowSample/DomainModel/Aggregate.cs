@@ -1,12 +1,11 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using EventFlow.Aggregates;
+﻿using DomainModel.Events;
 using EventFlow.Aggregates.ExecutionResults;
 using EventFlow.Snapshots;
 using EventFlow.Snapshots.Strategies;
-using GettingStartedTest.Model.Events;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace GettingStartedTest.Model
+namespace DomainModel
 {
     public class Aggregate : SnapshotAggregateRoot<Aggregate, AggregateId, AggregateSnapshot> //, IEmit<Event>
     {

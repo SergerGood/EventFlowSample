@@ -1,9 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using EventFlow.Aggregates.ExecutionResults;
+﻿using EventFlow.Aggregates.ExecutionResults;
 using EventFlow.Commands;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace GettingStartedTest.Model.Commands
+namespace DomainModel.Commands
 {
     public class SetMagicNumberDistinctCommandHandler
         : CommandHandler<Aggregate, AggregateId, IExecutionResult, SetMagicNumberDistinctCommand>

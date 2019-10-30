@@ -1,8 +1,8 @@
-﻿using System.Threading;
+﻿using EventFlow.Queries;
+using System.Threading;
 using System.Threading.Tasks;
-using EventFlow.Queries;
 
-namespace GettingStartedTest.Model.Queries
+namespace DomainModel.Queries
 {
     public class GetAggregateByMagicNumberQueryHandler : IQueryHandler<GetAggregateByMagicNumberQuery, AggregateReadModel>
     {

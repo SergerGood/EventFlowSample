@@ -1,7 +1,7 @@
 ﻿using EventFlow.Aggregates.ExecutionResults;
 using EventFlow.Commands;
 
-namespace GettingStartedTest.Model.Commands
+namespace DomainModel.Commands
 {
     public class SetMagicNumberCommand
         : Command<Aggregate, AggregateId, IExecutionResult>

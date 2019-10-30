@@ -1,9 +1,9 @@
-﻿using EventFlow.Aggregates;
+﻿using DomainModel.Events;
+using EventFlow.Aggregates;
 using EventFlow.PostgreSql.ReadStores.Attributes;
 using EventFlow.ReadStores;
-using GettingStartedTest.Model.Events;
 
-namespace GettingStartedTest.Model
+namespace DomainModel
 {
     public class AggregateReadModel : IReadModel, IAmReadModelFor<Aggregate, AggregateId, Event>
     {

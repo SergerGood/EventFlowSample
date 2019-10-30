@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using DomainModel.Events;
 using EventFlow.Aggregates;
 using EventFlow.Subscribers;
-using GettingStartedTest.Model.Events;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace GettingStartedTest.Model.Subscribers
+namespace DomainModel.Subscribers
 {
     public class AsynchronousSubscriber: ISubscribeAsynchronousTo<Aggregate, AggregateId,Event>
     {

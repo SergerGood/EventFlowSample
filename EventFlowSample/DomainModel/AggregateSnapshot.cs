@@ -1,6 +1,6 @@
 ﻿using EventFlow.Snapshots;
 
-namespace GettingStartedTest.Model
+namespace DomainModel
 {
     public class AggregateSnapshot: ISnapshot
     {

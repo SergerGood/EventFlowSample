@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using EventFlow.Aggregates.ExecutionResults;
+﻿using EventFlow.Aggregates.ExecutionResults;
 using EventFlow.Commands;
+using System;
+using System.Collections.Generic;
 
-namespace GettingStartedTest.Model.Commands
+namespace DomainModel.Commands
 {
     public class SetMagicNumberDistinctCommand
         : DistinctCommand<Aggregate, AggregateId, IExecutionResult>

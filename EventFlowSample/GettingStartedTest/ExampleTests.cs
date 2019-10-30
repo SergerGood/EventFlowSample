@@ -4,6 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using DomainModel;
+using DomainModel.Commands;
+using DomainModel.Events;
+using DomainModel.Queries;
+using DomainModel.Subscribers;
 using EventFlow;
 using EventFlow.Autofac.Extensions;
 using EventFlow.Core;
@@ -19,11 +24,6 @@ using EventFlow.Queries;
 using EventFlow.RabbitMQ;
 using EventFlow.RabbitMQ.Extensions;
 using FluentAssertions;
-using GettingStartedTest.Model;
-using GettingStartedTest.Model.Commands;
-using GettingStartedTest.Model.Events;
-using GettingStartedTest.Model.Queries;
-using GettingStartedTest.Model.Subscribers;
 using NUnit.Framework;
 
 namespace GettingStartedTest

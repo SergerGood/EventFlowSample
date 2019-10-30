@@ -1,6 +1,6 @@
 ﻿using EventFlow.Queries;
 
-namespace GettingStartedTest.Model.Queries
+namespace DomainModel.Queries
 {
     public class GetAggregateByMagicNumberQuery : IQuery<AggregateReadModel>
     {

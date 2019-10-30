@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using EventFlow.Aggregates;
+﻿using EventFlow.Aggregates;
 using EventFlow.EventStores;
+using System.Collections.Generic;
 
-namespace GettingStartedTest.Model.Events
+namespace DomainModel.Events
 {
-    internal class UpgradeEventToV2 : IEventUpgrader<Aggregate, AggregateId>
+    public class UpgradeEventToV2 : IEventUpgrader<Aggregate, AggregateId>
     {
         private readonly IDomainEventFactory domainEventFactory;
 
