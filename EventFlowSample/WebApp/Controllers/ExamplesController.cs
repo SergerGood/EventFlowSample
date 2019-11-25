@@ -40,7 +40,11 @@ namespace WebApp.Controllers
 
             await commandBus.PublishAsync(exampleCommand, CancellationToken.None);
 
-            return CreatedAtAction(nameof(GetExample), new {id = exampleCommand.AggregateId.Value}, exampleCommand);
+            var routeValues = new
+            {
+                id = exampleCommand.AggregateId.Value
+            };
+            return CreatedAtAction(nameof(GetExample), routeValues, exampleCommand);
         }
     }
 }
