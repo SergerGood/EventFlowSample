@@ -14,4 +14,4 @@ jobs:
       with:
         dotnet-version: 3.0.101
     - name: Run Tests with dotnet
-      run: dotnet test /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln --configuration Release
+      run: dotnet build /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln --configuration Release
