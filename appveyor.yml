@@ -5,7 +5,9 @@ version: 1.0.{build}
 
 image: Visual Studio 2019
 
-services: postgresql
+services: 
+  - postgresql
+  - rabbitmq
 
 nuget:
   disable_publish_on_pr: true
