@@ -5,13 +5,21 @@ version: 1.0.{build}
 
 image: Visual Studio 2019
 
-artifacts:
-  - path: Build\Packages\*nupkg
-
-services:
-  - postgresql101
+services: postgresql
 
 nuget:
-  account_feed: false
-  project_feed: false
   disable_publish_on_pr: true
+
+before_build:
+- cmd: >-
+    cd ./EventFlowSample
+
+    dotnet restore
+
+build:
+  publish_nuget: true
+  include_nuget_references: true
+  publish_aspnet_core: true
+  publish_core_console: true
+  parallel: true
+  verbosity: minimal
