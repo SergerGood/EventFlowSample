@@ -6,4 +6,4 @@ before_script:
     - dotnet restore ./EventFlowSample/EventFlowSample.sln
     - dotnet build ./EventFlowSample/EventFlowSample.sln
 script:    
-    - dotnet test EventFlowSample\GettingStartedTest\GettingStartedTest.csproj
+    - dotnet test ./EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
