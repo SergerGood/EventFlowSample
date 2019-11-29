@@ -3,7 +3,7 @@
        src="https://scan.coverity.com/projects/19935/badge.svg"/>
 </a>
 
-![](https://github.com/SergerGood/EventFlowSample/workflows/Asd/badge.svg)
+![](https://github.com/SergerGood/EventFlowSample/workflows/build/badge.svg)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/wltgtixpimapcotm?svg=true)](https://ci.appveyor.com/project/SergerGood/eventflowsample)
 
