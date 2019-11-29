@@ -3,8 +3,8 @@ language: csharp
 mono: none
 dotnet: 3.0
 services:
-  - postgresql
   - rabbitmq
+  - postgresql
 before_script:
     - dotnet restore ./EventFlowSample/EventFlowSample.sln
     - dotnet build ./EventFlowSample/EventFlowSample.sln
