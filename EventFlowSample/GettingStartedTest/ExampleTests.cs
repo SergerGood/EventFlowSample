@@ -23,6 +23,7 @@ using EventFlow.PostgreSql.SnapshotStores;
 using EventFlow.Queries;
 using EventFlow.RabbitMQ;
 using EventFlow.RabbitMQ.Extensions;
+using EventFlow.ReadStores.InMemory;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -139,7 +140,7 @@ namespace GettingStartedTest
                 .AddCommands(typeof(SetMagicNumberCommand))
                 .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
                 .UseInMemoryReadStoreFor<AggregateReadModel>()
-                .AddQueryHandler<GetAggregateByMagicNumberQueryHandler, GetAggregateByMagicNumberQuery, AggregateReadModel>()
+                .AddQueryHandler<GetMagicNumberByAggregateQueryHandler<IInMemoryReadStore<AggregateReadModel>, AggregateReadModel>, GetMagicNumberByAggregateQuery, int>()
                 .CreateResolver();
 
             var exampleId = AggregateId.NewComb();
@@ -153,10 +154,10 @@ namespace GettingStartedTest
 
             var queryProcessor = resolver.Resolve<IQueryProcessor>();
 
-            var query = new GetAggregateByMagicNumberQuery(magicNumber);
-            AggregateReadModel readModel = await queryProcessor.ProcessAsync(query, tokenSource.Token);
+            var query = new GetMagicNumberByAggregateQuery(exampleId);
+            int readMagicNumber = await queryProcessor.ProcessAsync(query, tokenSource.Token);
 
-            readModel.MagicNumber.Should().Be(magicNumber);
+            readMagicNumber.Should().Be(magicNumber);
         }
 
         [Test]
