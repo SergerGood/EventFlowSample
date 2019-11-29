@@ -3,7 +3,7 @@ init:
 
 version: 1.0.{build}
 
-image: Visual Studio 2019
+image: Ubuntu1604
 
 services: 
   - postgresql
