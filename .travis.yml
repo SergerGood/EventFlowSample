@@ -1,1 +1,8 @@
 
+language: csharp
+mono: none
+dotnet: 3.0
+script:
+    - dotnet restore
+    - dotnet build
+    - dotnet test EventFlowSample\GettingStartedTest\GettingStartedTest.csproj
