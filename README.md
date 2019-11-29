@@ -5,4 +5,6 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/wltgtixpimapcotm?svg=true)](https://ci.appveyor.com/project/SergerGood/eventflowsample)
 
+[![Build Status](https://travis-ci.com/SergerGood/EventFlowSample.svg?branch=master)](https://travis-ci.com/SergerGood/EventFlowSample)
+
 # EventFlowSample
