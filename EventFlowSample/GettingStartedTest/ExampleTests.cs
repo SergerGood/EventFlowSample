@@ -191,6 +191,7 @@ namespace GettingStartedTest
         }
 
         [Test]
+        [Ignore("Ignore a test")]
         public async Task ShouldUsePostgres()
         {
             var connectionString = @"Server=localhost;Port=5432;Database=event_flow_sample;User id=postgres;password=postgres;";
@@ -234,6 +235,7 @@ namespace GettingStartedTest
         }
 
         [Test]
+        [Ignore("Ignore a test")]
         public async Task ShouldUseSnapshots()
         {
             var connectionString = @"Server=localhost;Port=5432;Database=event_flow_sample;User id=postgres;password=postgres;";
