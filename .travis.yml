@@ -2,9 +2,8 @@
 language: csharp
 mono: none
 dotnet: 3.0
-solution: ./EventFlowSample/EventFlowSample.sln
 before_script:
-    - dotnet restore
-    - dotnet build
+    - dotnet restore ./EventFlowSample/EventFlowSample.sln
+    - dotnet build ./EventFlowSample/EventFlowSample.sln
 script:    
-    - dotnet test
+    - dotnet test 
