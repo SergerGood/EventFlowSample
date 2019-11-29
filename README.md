@@ -5,6 +5,8 @@
 
 [![Build status](https://github.com/SergerGood/EventFlowSample/blob/master/.github/workflows/dotnetcore.yml/badge.svg)]
 
+[![Actions Status](https://github.com/SergerGood/EventFlowSample/tree/master/.github/workflows/dotnetcore.yml/badge.svg)](https://github.com/SergerGood/EventFlowSample/actions)
+
 [![Build status](https://ci.appveyor.com/api/projects/status/wltgtixpimapcotm?svg=true)](https://ci.appveyor.com/project/SergerGood/eventflowsample)
 
 [![Build Status](https://travis-ci.com/SergerGood/EventFlowSample.svg?branch=master)](https://travis-ci.com/SergerGood/EventFlowSample)
