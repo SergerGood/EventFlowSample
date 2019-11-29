@@ -13,5 +13,9 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
+- script: dotnet build --configuration $(buildConfiguration) ./EventFlowSample/EventFlowSample.sln
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: './EventFlowSample/GettingStartedTest/GettingStartedTest.csproj'
   displayName: 'dotnet build $(buildConfiguration)'
