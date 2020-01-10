@@ -11,18 +11,18 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
-    <PackageReference Include="EventFlow" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.AspNetCore" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.Autofac" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.DependencyInjection" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.Elasticsearch" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.EventStores.EventStore" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.Hangfire" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.MsSql" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.PostgreSql" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.RabbitMQ" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.Sql" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.TestHelpers" Version="0.76.4014" />
+    <PackageReference Include="EventFlow" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.AspNetCore" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.Autofac" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.DependencyInjection" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.Elasticsearch" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.EventStores.EventStore" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.Hangfire" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.MsSql" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.PostgreSql" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.RabbitMQ" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.Sql" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.TestHelpers" Version="0.77.4077" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />

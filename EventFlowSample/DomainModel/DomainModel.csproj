@@ -5,18 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EventFlow" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.AspNetCore" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.Autofac" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.DependencyInjection" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.Elasticsearch" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.EntityFramework" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.EventStores.EventStore" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.Hangfire" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.MongoDB" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.PostgreSql" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.RabbitMQ" Version="0.76.4014" />
-    <PackageReference Include="EventFlow.Sql" Version="0.76.4014" />
+    <PackageReference Include="EventFlow" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.AspNetCore" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.Autofac" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.DependencyInjection" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.Elasticsearch" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.EntityFramework" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.EventStores.EventStore" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.Hangfire" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.MongoDB" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.PostgreSql" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.RabbitMQ" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.Sql" Version="0.77.4077" />
   </ItemGroup>
 
 </Project>
