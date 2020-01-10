@@ -1,23 +1,30 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace WebApp
 {
-    public class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {
             await CreateWebHostBuilder(args)
-                .ConfigureServices(services => services.AddAutofac())
-                .Build().RunAsync();
+                .RunAsync();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        private static IHost CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            return Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder
+                        .UseContentRoot(Directory.GetCurrentDirectory())
+                        .UseStartup<Startup>();
+                })
+                .Build();
         }
     }
 }
