@@ -3,7 +3,7 @@ init:
 
 version: 1.0.{build}
 
-image: Ubuntu1604
+image: Ubuntu
 
 services: 
   - postgresql13
