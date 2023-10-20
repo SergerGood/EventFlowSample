@@ -2,8 +2,6 @@ GitHub Actions: [![](https://github.com/SergerGood/EventFlowSample/workflows/bui
 
 AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/wltgtixpimapcotm?svg=true)](https://ci.appveyor.com/project/SergerGood/eventflowsample)
 
-Travis CI: [![Build Status](https://travis-ci.com/SergerGood/EventFlowSample.svg?branch=master)](https://travis-ci.com/SergerGood/EventFlowSample)
-
 Azure DevOps: [![Build Status](https://serzher.visualstudio.com/serzher/_apis/build/status/SergerGood.EventFlowSample?branchName=master)](https://serzher.visualstudio.com/serzher/_build/latest?definitionId=3&branchName=master)
 
 # EventFlowSample
