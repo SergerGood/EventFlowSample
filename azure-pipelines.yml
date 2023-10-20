@@ -14,8 +14,9 @@ variables:
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration) ./EventFlowSample/EventFlowSample.sln
-- task: DotNetCoreCLI@2
+- task: UseDotNet@2
   inputs:
+    version: '6.x'
     command: 'test'
     projects: './EventFlowSample/GettingStartedTest/GettingStartedTest.csproj'
   displayName: 'dotnet build $(buildConfiguration)'
