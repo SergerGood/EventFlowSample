@@ -102,7 +102,7 @@ namespace GettingStartedTest
                     x.ThrowSubscriberExceptions = true;
                 })
                 .AddMetadataProvider<AddMachineNameMetadataProvider>()
-                .PublishToRabbitMq(RabbitMqConfiguration.With(new Uri("amqp://localhost:5672")))
+                .PublishToRabbitMq(RabbitMqConfiguration.With(new Uri("amqp://127.0.0.1:5672")))
                 .AddSynchronousSubscriber<Aggregate, AggregateId, Event, SynchronousSubscriber>()
                 .AddAsynchronousSubscriber<Aggregate, AggregateId, Event, AsynchronousSubscriber>()
                 .AddEvents(typeof(Event))
