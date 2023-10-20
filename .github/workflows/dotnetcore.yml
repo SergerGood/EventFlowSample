@@ -18,7 +18,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.0.101
+        dotnet-version: 6.0.415
     - name: Run build with dotnet
       run: dotnet build /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln --configuration Release
     
