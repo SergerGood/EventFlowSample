@@ -3,7 +3,7 @@ init:
 
 version: 1.0.{build}
 
-image: Ubuntu
+image: Visual Studio 2022
 
 services: 
   - postgresql13
