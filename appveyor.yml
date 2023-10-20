@@ -6,7 +6,7 @@ version: 1.0.{build}
 image: Ubuntu1604
 
 services: 
-  - postgresql
+  - postgresql13
   - rabbitmq
 
 nuget:
