@@ -25,4 +25,4 @@ jobs:
     - name: Run build with dotnet
       run: dotnet build -c Release /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
     - name: Run tests
-      run: dotnet test -c Release /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
+      run: dotnet test -c Release --verbosity normal /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
