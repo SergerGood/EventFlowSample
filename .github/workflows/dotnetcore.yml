@@ -1,10 +1,9 @@
-name: build
+name: CI
 
 on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     services:
@@ -14,13 +13,16 @@ jobs:
         - 5672:5672
         
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.415
+        dotnet-version: 6.0.x
+    - name: Show dotnet version
+      run: |
+        dotnet --list-sdks
+        dotnet --list-runtimes
     - name: Run build with dotnet
-      run: dotnet build /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln --configuration Release
-    
-    - name: Run build with dotnet
-      run: dotnet test /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
+      run: dotnet build -c Release ./EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
+    - name: Run tests
+      run: dotnet test -c Release ./EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
