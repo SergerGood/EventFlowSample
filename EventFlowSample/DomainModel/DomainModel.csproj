@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -11,7 +11,7 @@
     <PackageReference Include="EventFlow.DependencyInjection" Version="0.77.4077" />
     <PackageReference Include="EventFlow.Elasticsearch" Version="0.77.4077" />
     <PackageReference Include="EventFlow.EntityFramework" Version="0.77.4077" />
-    <PackageReference Include="EventFlow.EventStores.EventStore" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.EventStores.EventStore" Version="0.83.4713" />
     <PackageReference Include="EventFlow.Hangfire" Version="0.77.4077" />
     <PackageReference Include="EventFlow.MongoDB" Version="0.77.4077" />
     <PackageReference Include="EventFlow.PostgreSql" Version="0.77.4077" />
