@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -18,7 +18,7 @@
     <PackageReference Include="EventFlow.PostgreSql" Version="0.77.4077" />
     <PackageReference Include="EventFlow.RabbitMQ" Version="0.77.4077" />
     <PackageReference Include="EventFlow.Sql" Version="0.77.4077" />
-    <PackageReference Include="EventFlow.SQLite" Version="0.77.4077" />
+    <PackageReference Include="EventFlow.SQLite" Version="0.83.4713" />
     <PackageReference Include="FluentAssertions" Version="5.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />
