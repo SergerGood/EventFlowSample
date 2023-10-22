@@ -13,10 +13,19 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration) ./EventFlowSample/EventFlowSample.sln
 - task: UseDotNet@2
+  displayName: 'Install .NET SDK'
   inputs:
     version: '6.x'
-    command: 'test'
-    projects: './EventFlowSample/GettingStartedTest/GettingStartedTest.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Install .NET SDK'
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    
+- task: DotNetCoreCLI@2
   displayName: 'dotnet build $(buildConfiguration)'
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
