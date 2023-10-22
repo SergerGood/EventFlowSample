@@ -52,6 +52,7 @@ jobs:
       run: |
         psql -h localhost -U postgres -c 'DROP DATABASE IF EXISTS "event_flow_sample";'
         psql -h localhost -U postgres -c 'CREATE DATABASE "event_flow_sample";'
+        psql -h localhost -U postgres -c 'CREATE TABLE "ReadModel-Aggregate" (id varchar NULL, magicnumber int4 NULL);'
       env:
         PGPASSWORD: postgres
     - name: Run tests
