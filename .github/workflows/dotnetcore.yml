@@ -35,8 +35,8 @@ jobs:
           version: 1.0
     - name: Setup database
       env:
-        PG_PASSWORD: postgres
-      run: psql -h localhost -U postgres -c 'CREATE DATABASE "event_flow_sample";'
+        POSTGRES_PASSWORD: postgres
+      run: psql -h localhost -U postgres -W postgres -c 'CREATE DATABASE "event_flow_sample";'
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
