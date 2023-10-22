@@ -33,6 +33,10 @@ jobs:
       with:
           packages: postgresql-client
           version: 1.0
+    - name: Setup database
+      env:
+        PG_PASSWORD: postgres
+      run: psql -h localhost -U postgres -c 'CREATE DATABASE "event_flow_sample";'
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -48,8 +52,6 @@ jobs:
       run: dotnet --version
     - name: Run build with dotnet
       run: dotnet build -c Release /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
-    - name: Setup database
-      run: psql -h localhost -U postgres -W postgres -c 'CREATE DATABASE "event_flow_sample";'
     - name: Run tests
       run: dotnet test -c Release --verbosity normal /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
       env:
