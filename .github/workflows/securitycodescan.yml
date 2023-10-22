@@ -30,6 +30,7 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: ./EventFlowSample
 
       - name: Build
         run: dotnet build --no-restore
