@@ -33,7 +33,9 @@ jobs:
           packages: postgresql-client
           version: 1.0
     - name: Setup database
-      run: psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'event_flow_sample'" | grep -q 1 || psql -h localhost -U postgres -c 'CREATE DATABASE "event_flow_sample";'
+      run: |
+        psql -h localhost -U postgres -c 'DROP DATABASE IF EXISTS "event_flow_sample";'
+        psql -h localhost -U postgres -c 'CREATE DATABASE "event_flow_sample";'
       env:
         PGPASSWORD: postgres
     - uses: actions/checkout@v4
