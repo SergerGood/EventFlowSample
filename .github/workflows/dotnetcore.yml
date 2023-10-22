@@ -12,9 +12,12 @@ jobs:
         ports:
         - 5672:5672
       postgres:
-        image: postgres
+        image: postgres:latest
         env:
           POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: event_flow_sample
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -22,7 +25,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          # Maps tcp port 5432 on service container to the host
           - 5432:5432
         
     steps:
@@ -42,6 +44,8 @@ jobs:
       run: dotnet --version
     - name: Run build with dotnet
       run: dotnet build -c Release /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
+    - name: Setup database
+      run: psql -h localhost -U postgres -c 'CREATE DATABASE "event_flow_sample";'
     - name: Run tests
       run: dotnet test -c Release --verbosity normal /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
       env:
