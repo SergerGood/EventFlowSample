@@ -23,6 +23,6 @@ jobs:
         dotnet --list-sdks
         dotnet --list-runtimes
     - name: Run build with dotnet
-      run: dotnet build -c Release ./EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
+      run: dotnet build -c Release /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
     - name: Run tests
-      run: dotnet test -c Release ./EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
+      run: dotnet test -c Release /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
