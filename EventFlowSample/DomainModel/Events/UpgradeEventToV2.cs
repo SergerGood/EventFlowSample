@@ -1,25 +1,20 @@
-﻿using EventFlow.Aggregates;
+﻿using System.Collections.Generic;
+using EventFlow.Aggregates;
 using EventFlow.EventStores;
-using System.Collections.Generic;
 
-namespace DomainModel.Events
+namespace DomainModel.Events;
+
+public class UpgradeEventToV2 : IEventUpgrader<Aggregate, AggregateId>
 {
-    public class UpgradeEventToV2 : IEventUpgrader<Aggregate, AggregateId>
+    private readonly IDomainEventFactory _domainEventFactory;
+
+    public UpgradeEventToV2(IDomainEventFactory domainEventFactory) => _domainEventFactory = domainEventFactory;
+
+    public IEnumerable<IDomainEvent<Aggregate, AggregateId>> Upgrade(IDomainEvent<Aggregate, AggregateId> domainEvent)
     {
-        private readonly IDomainEventFactory domainEventFactory;
-
-        public UpgradeEventToV2(IDomainEventFactory domainEventFactory)
-        {
-            this.domainEventFactory = domainEventFactory;
-        }
-
-        public IEnumerable<IDomainEvent<Aggregate, AggregateId>> Upgrade(IDomainEvent<Aggregate, AggregateId> domainEvent)
-        {
-            var eventV1 = domainEvent as IDomainEvent<Aggregate, AggregateId, Event>;
-
-            yield return eventV1 == null
-                ? domainEvent
-                : domainEventFactory.Upgrade<Aggregate, AggregateId>(domainEvent, new EventV2(eventV1.AggregateEvent.MagicNumber));
-        }
+        yield return domainEvent is not IDomainEvent<Aggregate, AggregateId, Event> eventV1
+            ? domainEvent
+            : _domainEventFactory.Upgrade<Aggregate, AggregateId>(domainEvent,
+                new EventV2(eventV1.AggregateEvent.MagicNumber));
     }
 }

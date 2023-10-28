@@ -12,48 +12,44 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace WebApp
+namespace WebApp;
+
+public class Startup
 {
-    public class Startup
+    public void ConfigureServices(IServiceCollection services)
     {
-        public void ConfigureServices(IServiceCollection services)
+        services.AddControllers();
+
+        services.AddSwaggerGen(c =>
         {
-            services.AddControllers();
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+        });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
+        services.AddOptions();
 
-            services.AddOptions();
+        var containerBuilder = new ContainerBuilder();
 
-            var containerBuilder = new ContainerBuilder();
+        EventFlowOptions.New
+            .AddAspNetCore(_ => { })
+            .UseAutofacContainerBuilder(containerBuilder)
+            .AddEvents(typeof(Event))
+            .AddCommands(typeof(SetMagicNumberCommand))
+            .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
+            .UseInMemoryReadStoreFor<AggregateReadModel>();
+    }
 
-            EventFlowOptions.New
-                .AddAspNetCore(options => { })
-                .UseAutofacContainerBuilder(containerBuilder)
-                .AddEvents(typeof(Event))
-                .AddCommands(typeof(SetMagicNumberCommand))
-                .AddCommandHandlers(typeof(SetMagicNumberCommandHandler))
-                .UseInMemoryReadStoreFor<AggregateReadModel>();
-        }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+        app.UseSwagger();
+        app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+        app.UseStaticFiles();
+        app.UseHttpsRedirection();
+        app.UseRouting();
 
-            app.UseStaticFiles();
-            app.UseHttpsRedirection();
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-        }
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 }

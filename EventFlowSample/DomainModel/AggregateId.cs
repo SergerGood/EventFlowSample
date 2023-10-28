@@ -1,12 +1,11 @@
 ﻿using EventFlow.Core;
 
-namespace DomainModel
+namespace DomainModel;
+
+public class AggregateId : Identity<AggregateId>
 {
-    public class AggregateId : Identity<AggregateId>
+    public AggregateId(string value)
+        : base(value)
     {
-        public AggregateId(string value)
-            : base(value)
-        {
-        }
     }
 }

@@ -5,33 +5,32 @@ using EventFlow.Configuration;
 using EventFlow.ReadStores;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class DataModelController : Controller
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class DataModelController : Controller
+    private readonly IReadModelPopulator _readModelPopulator;
+
+    public DataModelController(IResolver resolver)
     {
-        private readonly IReadModelPopulator readModelPopulator;
+        _readModelPopulator = resolver.Resolve<IReadModelPopulator>();
+    }
 
-        public DataModelController(IResolver resolver)
-        {
-            readModelPopulator = resolver.Resolve<IReadModelPopulator>();
-        }
+    [HttpPost]
+    public async Task<ActionResult> ReplayEvents(CancellationToken cancellationToken)
+    {
+        await _readModelPopulator.PopulateAsync<AggregateReadModel>(cancellationToken);
 
-        [HttpPost]
-        public async Task<ActionResult> ReplayEvents()
-        {
-            await readModelPopulator.PopulateAsync<AggregateReadModel>(CancellationToken.None);
+        return Accepted("Read models are replayed");
+    }
 
-            return Accepted("Read models are replayed");
-        }
+    [HttpDelete]
+    public async Task<ActionResult> DeleteEvents(CancellationToken cancellationToken)
+    {
+        await _readModelPopulator.PurgeAsync<AggregateReadModel>(cancellationToken);
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteEvents()
-        {
-            await readModelPopulator.PurgeAsync<AggregateReadModel>(CancellationToken.None);
-
-            return Ok("Read models deleted");
-        }
+        return Ok("Read models deleted");
     }
 }

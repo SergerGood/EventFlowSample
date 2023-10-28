@@ -1,21 +1,21 @@
-﻿using EventFlow.Aggregates.ExecutionResults;
-using EventFlow.Commands;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using EventFlow.Aggregates.ExecutionResults;
+using EventFlow.Commands;
 
-namespace DomainModel.Commands
+namespace DomainModel.Commands;
+
+public class SetMagicNumberDistinctCommandHandler
+    : CommandHandler<Aggregate, AggregateId, IExecutionResult, SetMagicNumberDistinctCommand>
 {
-    public class SetMagicNumberDistinctCommandHandler
-        : CommandHandler<Aggregate, AggregateId, IExecutionResult, SetMagicNumberDistinctCommand>
+    public override Task<IExecutionResult> ExecuteCommandAsync(Aggregate aggregate,
+        SetMagicNumberDistinctCommand command,
+        CancellationToken cancellationToken)
     {
-        public override Task<IExecutionResult> ExecuteCommandAsync(Aggregate aggregate, SetMagicNumberDistinctCommand command,
-            CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
+        cancellationToken.ThrowIfCancellationRequested();
 
-            IExecutionResult executionResult = aggregate.SetMagicNumber(command.MagicNumber);
+        var executionResult = aggregate.SetMagicNumber(command.MagicNumber);
 
-            return Task.FromResult(executionResult);
-        }
+        return Task.FromResult(executionResult);
     }
 }

@@ -1,16 +1,12 @@
 ﻿using EventFlow.Aggregates;
 using EventFlow.EventStores;
 
-namespace DomainModel.Events
-{
-    [EventVersion("example", 1)]
-    public class Event : AggregateEvent<Aggregate, AggregateId>
-    {
-        public Event(int magicNumber)
-        {
-            MagicNumber = magicNumber;
-        }
+namespace DomainModel.Events;
 
-        public int MagicNumber { get; }
-    }
+[EventVersion("example", 1)]
+public class Event : AggregateEvent<Aggregate, AggregateId>
+{
+    public Event(int magicNumber) => MagicNumber = magicNumber;
+
+    public int MagicNumber { get; }
 }

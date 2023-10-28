@@ -1,9 +1,7 @@
 ﻿using EventFlow.Snapshots;
 
-namespace DomainModel
+namespace DomainModel;
+
+public class AggregateSnapshot : ISnapshot
 {
-    public class AggregateSnapshot: ISnapshot
-    {
-        
-    }
 }

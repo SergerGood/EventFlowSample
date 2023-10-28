@@ -6,45 +6,45 @@ using EventFlow;
 using EventFlow.Queries;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ExamplesController : Controller
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ExamplesController : Controller
+    private readonly ICommandBus _commandBus;
+    private readonly IQueryProcessor _queryProcessor;
+
+
+    public ExamplesController(
+        ICommandBus commandBus,
+        IQueryProcessor queryProcessor)
     {
-        private readonly ICommandBus commandBus;
-        private readonly IQueryProcessor queryProcessor;
+        _commandBus = commandBus;
+        _queryProcessor = queryProcessor;
+    }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<AggregateReadModel>> GetExample(string id, CancellationToken cancellationToken)
+    {
+        var readModelByIdQuery = new ReadModelByIdQuery<AggregateReadModel>(id);
+        var readModel = await _queryProcessor.ProcessAsync(readModelByIdQuery, cancellationToken);
 
-        public ExamplesController(
-            ICommandBus commandBus,
-            IQueryProcessor queryProcessor)
+        return Ok(readModel);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Post([FromBody] int value, CancellationToken cancellationToken)
+    {
+        var exampleCommand = new SetMagicNumberCommand(AggregateId.New, value);
+
+        await _commandBus.PublishAsync(exampleCommand, cancellationToken);
+
+        var routeValues = new
         {
-            this.commandBus = commandBus;
-            this.queryProcessor = queryProcessor;
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AggregateReadModel>> GetExample(string id)
-        {
-            var readModel = await queryProcessor.ProcessAsync(new ReadModelByIdQuery<AggregateReadModel>(id),
-                CancellationToken.None);
-
-            return Ok(readModel);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] int value)
-        {
-            var exampleCommand = new SetMagicNumberCommand(AggregateId.New, value);
-
-            await commandBus.PublishAsync(exampleCommand, CancellationToken.None);
-
-            var routeValues = new
-            {
-                id = exampleCommand.AggregateId.Value
-            };
-            return CreatedAtAction(nameof(GetExample), routeValues, exampleCommand);
-        }
+            id = exampleCommand.AggregateId.Value
+        };
+        
+        return CreatedAtAction(nameof(GetExample), routeValues, exampleCommand);
     }
 }
