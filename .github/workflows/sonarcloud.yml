@@ -64,6 +64,8 @@ jobs:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Show dotnet version
+        run: dotnet --version
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
