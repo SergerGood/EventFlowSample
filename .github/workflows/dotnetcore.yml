@@ -45,7 +45,7 @@ jobs:
       run: dotnet restore /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
       
     - name: Build
-      run: dotnet build -c Release /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
+      run: dotnet build -c Release --no-restore /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
       
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
@@ -59,7 +59,7 @@ jobs:
       env:
         PGPASSWORD: postgres
     - name: Run tests
-      run: dotnet test --logger "trx;LogFileName=test-results.trx" -c Release --verbosity normal /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
+      run: dotnet test --logger "trx;LogFileName=test-results.trx" -c Release --no-restore --verbosity normal /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
       env:
           # The hostname used to communicate with the PostgreSQL service container
           POSTGRES_HOST: localhost
