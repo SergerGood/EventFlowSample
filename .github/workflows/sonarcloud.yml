@@ -64,8 +64,6 @@ jobs:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
-      - name: Install dotnet-sonarscanner
-        run: dotnet tool install --global dotnet-sonarscanner --version 5.14.0
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -78,7 +76,7 @@ jobs:
             # mandatory
             -Dsonar.projectKey=SergerGood_EventFlowSample
             -Dsonar.organization=sergergood
-            -Dsonar.python.coverage.reportPaths=coverage.xml
-            -Dsonar.tests=EventFlowSample/GettingStartedTest
+            #-Dsonar.python.coverage.reportPaths=coverage.xml
+            #-Dsonar.tests=EventFlowSample/GettingStartedTest
             # Adds more detail to both client and server-side analysis logs, activating DEBUG mode for the scanner, and adding client-side environment variables and system properties to the server-side log of analysis report processing.
             #-Dsonar.verbose= # optional, default is false
