@@ -68,8 +68,19 @@ jobs:
           
     - name: Test Report
       uses: dorny/test-reporter@v1
-      if: success() || failure()    # run this step even if previous step failed
+      if: success() || failure() # run this step even if previous step failed
       with:
-        name: Tests            # Name of the check run which will be created
-        path: /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/TestResults/test-results.trx    # Path to test results
-        reporter: dotnet-trx        # Format of test results
+        name: Tests
+        path: /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/TestResults/test-results.trx
+        reporter: dotnet-trx
+        
+    - name: unit tests for Contoso Business Layer
+      uses: zyborg/dotnet-tests-report@v1
+      with:
+          project_path: /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest
+          report_name: tests
+          report_title: Tests
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gist_name: tests.md
+          gist_badge_label: 'Tests: %Counters_passed%/%Counters_total%'
+          gist_token: ${{ secrets.GIST_TOKEN }}
