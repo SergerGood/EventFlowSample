@@ -42,8 +42,10 @@ jobs:
           ${{ runner.os }}-nuget
     - name: Show dotnet version
       run: dotnet --version
+      
     - name: Run build with dotnet
       run: dotnet build -c Release /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/EventFlowSample.sln
+      
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
           packages: postgresql-client
@@ -56,9 +58,16 @@ jobs:
       env:
         PGPASSWORD: postgres
     - name: Run tests
-      run: dotnet test -c Release --verbosity normal /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
+      run: dotnet test --logger "trx;LogFileName=test-results.trx" -c Release --verbosity normal /home/runner/work/EventFlowSample/EventFlowSample/EventFlowSample/GettingStartedTest/GettingStartedTest.csproj
       env:
           # The hostname used to communicate with the PostgreSQL service container
           POSTGRES_HOST: localhost
           # The default PostgreSQL port
           POSTGRES_PORT: 5432
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()    # run this step even if previous step failed
+      with:
+        name: JEST Tests            # Name of the check run which will be created
+        path: reports/test-results.trx    # Path to test results
+        reporter: dotnet-trx        # Format of test results
