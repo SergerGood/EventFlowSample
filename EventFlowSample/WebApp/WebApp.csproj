@@ -19,7 +19,7 @@
     <PackageReference Include="EventFlow.Sql" Version="0.83.4713" />
     <PackageReference Include="EventFlow.TestHelpers" Version="0.83.4713" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.1" />
   </ItemGroup>
 
   <ItemGroup>
