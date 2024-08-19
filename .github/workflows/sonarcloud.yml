@@ -64,6 +64,8 @@ jobs:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Show secrets
+        run: echo ${{ secrets.GITHUB_TOKEN }}
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
