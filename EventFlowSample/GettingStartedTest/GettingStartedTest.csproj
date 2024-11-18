@@ -13,7 +13,7 @@
     <PackageReference Include="EventFlow.EntityFramework" Version="0.83.4713" />
     <PackageReference Include="EventFlow.EventStores.EventStore" Version="0.83.4713" />
     <PackageReference Include="EventFlow.Hangfire" Version="0.83.4713" />
-    <PackageReference Include="EventFlow.MongoDB" Version="0.83.4713" />
+    <PackageReference Include="EventFlow.MongoDB" Version="1.0.5007" />
     <PackageReference Include="EventFlow.MsSql" Version="0.83.4713" />
     <PackageReference Include="EventFlow.PostgreSql" Version="0.83.4713" />
     <PackageReference Include="EventFlow.RabbitMQ" Version="0.83.4713" />
