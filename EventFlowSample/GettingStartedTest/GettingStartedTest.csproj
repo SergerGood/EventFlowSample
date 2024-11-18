@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="EventFlow.Autofac" Version="0.83.4713" />
-    <PackageReference Include="EventFlow.DependencyInjection" Version="0.83.4713" />
+    <PackageReference Include="EventFlow.DependencyInjection" Version="0.84.4" />
     <PackageReference Include="EventFlow.Elasticsearch" Version="0.83.4713" />
     <PackageReference Include="EventFlow.EntityFramework" Version="0.83.4713" />
     <PackageReference Include="EventFlow.EventStores.EventStore" Version="0.83.4713" />
