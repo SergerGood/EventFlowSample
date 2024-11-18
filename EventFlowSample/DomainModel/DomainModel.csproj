@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EventFlow" Version="0.83.4713" />
+    <PackageReference Include="EventFlow" Version="1.0.5007" />
     <PackageReference Include="EventFlow.AspNetCore" Version="0.83.4713" />
     <PackageReference Include="EventFlow.Autofac" Version="0.83.4713" />
     <PackageReference Include="EventFlow.DependencyInjection" Version="0.83.4713" />
@@ -16,7 +16,7 @@
     <PackageReference Include="EventFlow.MongoDB" Version="0.83.4713" />
     <PackageReference Include="EventFlow.PostgreSql" Version="0.83.4713" />
     <PackageReference Include="EventFlow.RabbitMQ" Version="0.83.4713" />
-    <PackageReference Include="EventFlow.Sql" Version="0.83.4713" />
+    <PackageReference Include="EventFlow.Sql" Version="1.0.5007" />
   </ItemGroup>
 
 </Project>
