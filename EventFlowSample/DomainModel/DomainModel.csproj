@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="EventFlow" Version="1.0.5007" />
-    <PackageReference Include="EventFlow.AspNetCore" Version="0.83.4713" />
+    <PackageReference Include="EventFlow.AspNetCore" Version="0.84.4" />
     <PackageReference Include="EventFlow.Autofac" Version="0.84.4" />
     <PackageReference Include="EventFlow.DependencyInjection" Version="0.83.4713" />
     <PackageReference Include="EventFlow.Elasticsearch" Version="0.83.4713" />
