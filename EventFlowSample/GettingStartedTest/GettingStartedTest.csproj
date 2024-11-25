@@ -16,7 +16,7 @@
     <PackageReference Include="EventFlow.MongoDB" Version="0.83.4713" />
     <PackageReference Include="EventFlow.MsSql" Version="0.83.4713" />
     <PackageReference Include="EventFlow.PostgreSql" Version="0.83.4713" />
-    <PackageReference Include="EventFlow.RabbitMQ" Version="0.83.4713" />
+    <PackageReference Include="EventFlow.RabbitMQ" Version="1.0.5007" />
     <PackageReference Include="EventFlow.Sql" Version="0.83.4713" />
     <PackageReference Include="EventFlow.SQLite" Version="0.83.4713" />
     <PackageReference Include="FluentAssertions" Version="6.12.2" />
